@@ -1,4 +1,4 @@
 Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
-  get '/compare-playlists', to: 'playlists#shared_track_count'
+    get '/compare-playlists', to: 'api/playlists#shared_track_count'
 end
