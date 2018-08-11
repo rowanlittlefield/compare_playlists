@@ -1,7 +1,8 @@
 class Api::PlaylistsController < ApplicationController
 
   def shared_track_count
-    debugger
+    # spotify_response = spotify_api_call(params[:spotify])
+    # apple_response = apple_api_call(params[:appleMusic])
 
     spotify_ids = spotify_track_isrc_ids_list(spotify_json_mock)
     apple_ids = apple_track_isrc_ids_list(apple_json_mock)
@@ -11,6 +12,14 @@ class Api::PlaylistsController < ApplicationController
   end
 
   private
+
+  def spotify_api_call(playlist_id)
+    # curl -X GET "https://api.spotify.com/v1/users/spotify/playlists/59ZbFPES4DQwEjBpWHzrtC"
+  end
+
+  def apple_api_call
+
+  end
 
   def spotify_track_isrc_ids_list(spotify_json_response)
     spotify_hash = JSON.parse(spotify_json_response)
