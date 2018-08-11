@@ -1,8 +1,11 @@
+require 'net/http'
+
 class Api::PlaylistsController < ApplicationController
 
   def shared_track_count
     # spotify_response = spotify_api_call(params[:spotify])
     # apple_response = apple_api_call(params[:appleMusic])
+    a = spotify_api_call('1')
 
     spotify_ids = spotify_track_isrc_ids_list(spotify_json_mock)
     apple_ids = apple_track_isrc_ids_list(apple_json_mock)
@@ -14,7 +17,16 @@ class Api::PlaylistsController < ApplicationController
   private
 
   def spotify_api_call(playlist_id)
-    # curl -X GET "https://api.spotify.com/v1/users/spotify/playlists/59ZbFPES4DQwEjBpWHzrtC"
+    debugger
+    uri = URI("https://api.spotify.com/v1/users/spotify/playlists/#{playlist_id}")
+
+    http = Net::HTTP.new(uri.host, uri.port)
+    http.use_ssl = true
+
+    request = Net::HTTP::Get.new(uri.path, {'Content-Type' => 'application/json'})
+    # request.body = {} # SOME JSON DATA
+
+    response = http.request(request)
   end
 
   def apple_api_call
