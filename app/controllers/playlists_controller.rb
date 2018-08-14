@@ -4,10 +4,9 @@ class PlaylistsController < ApplicationController
 
   def shared_track_count
     spotify_response = SpotifyClient.api_response(params[:spotify])
-    debugger
     apple_music_response = AppleMusicClient.api_response(params[:appleMusic])
-    spotify_ids = spotify_track_isrc_ids_list(spotify_json_mock)
-    apple_ids = apple_track_isrc_ids_list(apple_json_mock)
+    spotify_ids = spotify_track_isrc_ids_list(spotify_response)
+    apple_ids = apple_track_isrc_ids_list(apple_music_response)
 
     render json: {count: common_ids_count(spotify_ids, apple_ids)}
   end
@@ -36,43 +35,4 @@ class PlaylistsController < ApplicationController
     id_list_two.select {|id| list_one_ids_set[id] }.count
   end
 
-  def spotify_json_mock
-    {
-      tracks: [
-        {track: {external_ids: {isrc: '1'}}},
-        {track: {external_ids: {isrc: '2'}}},
-        {track: {external_ids: {isrc: "USVI29700014"}}}
-      ]
-    }.to_json
-  end
-
-  def apple_json_mock
-    {
-      data: [
-        {
-          relationships: {
-            tracks: {
-              data: [
-                {
-                  attributes: {
-                    isrc: "USVI29700014"
-                  }
-                },
-                {
-                  attributes: {
-                    isrc: "USVI20100057"
-                  }
-                },
-                {
-                  attributes: {
-                    isrc: "USVI20100098"
-                  }
-                }
-              ]
-            }
-          }
-        }
-      ]
-    }.to_json
-  end
 end
