@@ -1,4 +1,4 @@
-class PlaylistsController < ApplicationController
+class Api::PlaylistsController < ApplicationController
 
   def shared_track_count
     spotify_response = SpotifyClient.api_response(params[:spotify])

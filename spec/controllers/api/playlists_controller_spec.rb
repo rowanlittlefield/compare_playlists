@@ -1,7 +1,7 @@
 require 'rails_helper'
 require 'byebug'
 
-RSpec.describe PlaylistsController, type: :controller do
+RSpec.describe Api::PlaylistsController, type: :controller do
 
   describe 'GET #shared_track_count' do
     spotify_response_1 = {
