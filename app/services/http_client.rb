@@ -7,7 +7,7 @@ class HTTPClient
     @uri = uri
   end
 
-  def self.api_response(playlist_id)
+  def self.fetch_tracks(playlist_id)
     client = self.class.new(playlist_id)
     client.send_request
   end
