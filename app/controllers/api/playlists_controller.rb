@@ -3,7 +3,6 @@ class Api::PlaylistsController < ApplicationController
   def shared_track_count
     spotify_response = SpotifyClient.fetch_tracks(params[:spotify])
     apple_music_response = AppleMusicClient.fetch_tracks(params[:appleMusic])
-    debugger
     if spotify_response[:code] == '200' && apple_music_response[:code] == '200'
       spotify_ids = spotify_track_isrc_ids_list(spotify_response[:body])
       apple_ids = apple_track_isrc_ids_list(apple_music_response[:body])

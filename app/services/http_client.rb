@@ -14,6 +14,10 @@ class HTTPClient
       uri.path, {'Content-Type' => 'application/json'}
     )
     response = http.request(request)
-    { code: response.code, body: JSON.parse(response.body)}
+    if response.code == '200'
+      { code: response.code, body: JSON.parse(response.body)}
+    else
+      { code: response.code }
+    end
   end
 end
