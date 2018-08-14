@@ -1,9 +1,10 @@
 require 'net/http'
 
-class Api::PlaylistsController < ApplicationController
+class PlaylistsController < ApplicationController
 
   def shared_track_count
     spotify_response = SpotifyClient.api_response(params[:spotify])
+    debugger
     apple_music_response = AppleMusicClient.api_response(params[:appleMusic])
     spotify_ids = spotify_track_isrc_ids_list(spotify_json_mock)
     apple_ids = apple_track_isrc_ids_list(apple_json_mock)
