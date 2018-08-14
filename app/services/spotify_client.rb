@@ -1,3 +1,5 @@
+require 'net/http'
+
 class SpotifyClient
   attr_reader :playlist_id
 

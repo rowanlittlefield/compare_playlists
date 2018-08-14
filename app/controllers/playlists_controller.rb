@@ -1,5 +1,3 @@
-require 'net/http'
-
 class PlaylistsController < ApplicationController
 
   def shared_track_count

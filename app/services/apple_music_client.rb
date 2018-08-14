@@ -1,3 +1,5 @@
+require 'net/http'
+
 class AppleMusicClient
   attr_reader :playlist_id
 
