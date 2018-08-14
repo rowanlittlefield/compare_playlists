@@ -15,7 +15,7 @@ class HTTPClient
     )
     response = http.request(request)
     if response.code == '200'
-      { code: response.code, body: JSON.parse(response.body)}
+      { code: response.code, body: JSON.parse(response.body) }
     else
       { code: response.code }
     end
