@@ -3,26 +3,26 @@ class Api::PlaylistsController < ApplicationController
   def shared_track_count
     spotify_response = SpotifyClient.fetch_tracks(params[:spotify])
     apple_music_response = AppleMusicClient.fetch_tracks(params[:appleMusic])
-    spotify_ids = spotify_track_isrc_ids_list(spotify_response)
-    apple_ids = apple_track_isrc_ids_list(apple_music_response)
-
-    render json: {count: common_ids_count(spotify_ids, apple_ids)}
+    debugger
+    if spotify_response[:code] == '200' && apple_music_response[:code] == '200'
+      spotify_ids = spotify_track_isrc_ids_list(spotify_response[:body])
+      apple_ids = apple_track_isrc_ids_list(apple_music_response[:body])
+      render json: {count: common_ids_count(spotify_ids, apple_ids)}
+    else
+      render json: 'Invalid authorization/track ids', status: 400
+    end
   end
 
   private
 
-  def spotify_track_isrc_ids_list(spotify_json_response)
-    spotify_hash = JSON.parse(spotify_json_response)
-
-    spotify_hash['tracks'].map do |track|
+  def spotify_track_isrc_ids_list(spotify_response)
+    spotify_response['tracks'].map do |track|
       track["track"]['external_ids']['isrc']
     end
   end
 
-  def apple_track_isrc_ids_list(apple_json_response)
-    apple_hash = JSON.parse(apple_json_response)
-
-    apple_hash['data'][0]['relationships']['tracks']['data'].map do |track|
+  def apple_track_isrc_ids_list(apple_response)
+    apple_response['data'][0]['relationships']['tracks']['data'].map do |track|
       track['attributes']['isrc']
     end
   end

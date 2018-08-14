@@ -7,11 +7,6 @@ class HTTPClient
     @uri = uri
   end
 
-  def self.fetch_tracks(playlist_id)
-    client = self.class.new(playlist_id)
-    client.send_request
-  end
-
   def send_request
     http = Net::HTTP.new(uri.host, uri.port)
     http.use_ssl = true
@@ -19,5 +14,6 @@ class HTTPClient
       uri.path, {'Content-Type' => 'application/json'}
     )
     response = http.request(request)
+    { code: response.code, body: JSON.parse(response.body)}
   end
 end
